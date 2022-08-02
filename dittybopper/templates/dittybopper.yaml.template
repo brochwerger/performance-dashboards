@@ -57,6 +57,17 @@ spec:
           name: sc-grafana-config
         - mountPath: /etc/grafana/provisioning/datasources
           name: sc-ocp-prom
+        env:
+        - name: GF_RENDERING_SERVER_URL
+          value: "http://localhost:8081/render"
+        - name: GF_RENDERING_CALLBACK_URL
+          value: "http://localhost:3000/"
+      - name: renderer
+        imagePullPolicy: Always
+        image: ${GRAFANA_IMAGE_RENDERER}
+        ports:
+          - containerPort: 8081
+
       - name: dittybopper-syncer
         imagePullPolicy: Always
         env:
